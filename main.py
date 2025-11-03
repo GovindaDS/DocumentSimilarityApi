@@ -22,7 +22,27 @@ async def check_similar_documents(file: UploadFile = File(...), threshold: float
     temp_file = f"temp{ext}"
     with open(temp_file, "wb") as f:
         f.write(await file.read())
+        # Extract and embed the uploaded document
+        text = extract_text_from_file(temp_file)
+        doc_vector = get_document_embedding(text, model)
 
+        # Compute similarity
+        sims = cosine_similarity([doc_vector], embeddings)[0]
+
+        # Find all matches above threshold
+        results = []
+        for idx, score in enumerate(sims):
+            if score >= threshold:
+                results.append({
+                    "matched_document_id": ids[idx],
+                    "similarity_score": float(score)
+                })
+
+        return {
+            "total_matches": len(results),
+            "similar_documents": results
+        }
+    # Clean up temporary file Extract and embed the uploaded documentExtract and embed the uploaded documentExtract and embed the uploaded documentExtract and embed the uploaded document
     try:
         # Extract and embed the uploaded document
         text = extract_text_from_file(temp_file)
