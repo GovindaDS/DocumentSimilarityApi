@@ -69,3 +69,5 @@ async def check_similar_documents(file: UploadFile = File(...), threshold: float
         return {"error": str(e)}
     finally:
         os.remove(temp_file)
+         # Find all matches above threshold Find all matches above threshold Find all matches above threshold Find all matches above thresholdFind all matches 
+         # #above thresholdFind all matches above threshold
