@@ -16,6 +16,11 @@ embeddings = np.load("embeddings.npy")
 with open("ids.json", "r") as f:
     ids = json.load(f)
 
+model1 = SentenceTransformer('all-MiniLM-L6-v2')
+embeddings1 = np.load("embeddings.npy")
+with open("ids.json", "r") as f:
+    ids1 = json.load(f)
+
 @app.post("/check-similar-documents")
 async def check_similar_documents(file: UploadFile = File(...), threshold: float = 0.85):
     ext = os.path.splitext(file.filename)[1]
